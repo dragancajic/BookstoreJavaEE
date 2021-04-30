@@ -26,6 +26,10 @@
     </dependencies>
 
     <build>
+        <!--
+         finalName tag in build configuration removes version number suffix, e.g. bookstore-back-1.0.war
+         -->
+        <finalName>bookstore-back</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
