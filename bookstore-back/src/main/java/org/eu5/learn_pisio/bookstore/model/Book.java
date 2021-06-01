@@ -5,25 +5,26 @@ import java.util.Date;
 
 @Entity
 public class Book {
-
-	@Id @GeneratedValue
+	
+	@Id
+	@GeneratedValue
 	private Long id;
-
+	
 	@Column(length = 200)
 	private String title;
 	
 	@Column(length = 1000)
 	private String description;
-
+	
 	@Column(name = "unit_cost")
 	private Float unitCost;
-
+	
 	private String isbn;
-
+	
 	@Column(name = "publication_date")
 	@Temporal(TemporalType.DATE)
 	private Date publicationDate;
-
+	
 	@Column(name = "number_of_pages")
 	private Integer numberOfPages;
 	
@@ -31,6 +32,21 @@ public class Book {
 	private String imageUrl;
 	
 	private Language language;
+	
+	public Book() {
+	}
+	
+	public Book(String isbn, String title, Float unitCost, Integer numberOfPages,
+	            Language language, Date publicationDate, String imageUrl, String description) {
+		this.title = title;
+		this.description = description;
+		this.unitCost = unitCost;
+		this.isbn = isbn;
+		this.publicationDate = publicationDate;
+		this.numberOfPages = numberOfPages;
+		this.imageUrl = imageUrl;
+		this.language = language;
+	}
 	
 	public Long getId() {
 		return id;
