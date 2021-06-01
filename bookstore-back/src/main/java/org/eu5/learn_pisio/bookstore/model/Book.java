@@ -1,6 +1,10 @@
 package org.eu5.learn_pisio.bookstore.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -11,18 +15,27 @@ public class Book {
 	private Long id;
 	
 	@Column(length = 200)
+	@NotNull
+	@Size(min = 1, max = 200)
 	private String title;
 	
 	@Column(length = 1000)
+	@Size(min = 1, max = 10_000)
 	private String description;
 	
 	@Column(name = "unit_cost")
+	@NotNull
+	@Min(1)
 	private Float unitCost;
 	
+	@Column(length = 50)
+	@NotNull
+	@Size(min = 1, max = 50)
 	private String isbn;
 	
 	@Column(name = "publication_date")
 	@Temporal(TemporalType.DATE)
+	@Past
 	private Date publicationDate;
 	
 	@Column(name = "number_of_pages")
@@ -31,6 +44,7 @@ public class Book {
 	@Column(name = "image_url")
 	private String imageUrl;
 	
+	@Enumerated
 	private Language language;
 	
 	public Book() {
