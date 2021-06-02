@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/jsf/html"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.eu5.learn_pisio.java-ee-app-bootstrap</groupId>
@@ -14,13 +14,18 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <!-- Swagger -->
+	    <version.swagger>1.5.13</version.swagger>
         <!-- Test -->
 	    <version.junit>4.12</version.junit>
 	    <version.arquillian>1.4.1.Final</version.arquillian>
 	    <version.arquillian.wildfly>2.1.1.Final</version.arquillian.wildfly>
 	    <version.shrinkwrap>1.2.6</version.shrinkwrap>
+	    <version.arquillian.rest>1.0.0.Alpha4</version.arquillian.rest>
+	    <version.resteasy>3.1.1.Final</version.resteasy>
 	    <!-- Plugins -->
 	    <version.surefire.plugin>2.19.1</version.surefire.plugin>
+	    <version.swagger.plugin>3.1.4</version.swagger.plugin>
     </properties>
     
 	<dependencyManagement>
@@ -42,6 +47,11 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+	    <dependency>
+		    <groupId>io.swagger</groupId>
+		    <artifactId>swagger-annotations</artifactId>
+		    <version>${version.swagger}</version>
+	    </dependency>
 	    
 	    <!-- TEST -->
 	    <dependency>
@@ -77,6 +87,20 @@
 		    <version>${version.arquillian.wildfly}</version>
 		    <scope>test</scope>
 	    </dependency>
+	    
+	    <dependency>
+		    <groupId>org.jboss.arquillian.extension</groupId>
+		    <artifactId>arquillian-rest-client-api</artifactId>
+		    <version>${version.arquillian.rest}</version>
+		    <scope>test</scope>
+	    </dependency>
+	    
+	    <dependency>
+		    <groupId>org.jboss.resteasy</groupId>
+		    <artifactId>resteasy-jackson-provider</artifactId>
+		    <version>${version.resteasy}</version>
+		    <scope>test</scope>
+	    </dependency>
     </dependencies>
 
     <build>
@@ -90,8 +114,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <compilerArguments>
                         <endorseddirs>${endorsed.dir}</endorseddirs>
                     </compilerArguments>
@@ -134,6 +158,38 @@
                     </execution>
                 </executions>
             </plugin>
+	        <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-project-info-reports-plugin</artifactId>
+		        <version>2.9</version>
+	        </plugin>
+	        <plugin>
+		        <groupId>com.github.kongchen</groupId>
+		        <artifactId>swagger-maven-plugin</artifactId>
+		        <version>${version.swagger.plugin}</version>
+		        <configuration>
+			        <apiSources>
+				        <apiSource>
+					        <springmvc>false</springmvc>
+					        <locations>org.eu5.learn_pisio.bookstore.rest</locations>
+					        <schemes>http,https</schemes>
+					        <host>localhost:8080</host>
+					        <basePath>/bookstore-back/api</basePath>
+					        <outputFormats>json</outputFormats>
+					        <info>
+						        <title>BookStore APIs</title>
+						        <version>1.0.0</version>
+						        <description>BookStore APIs exposed from a Java backend</description>
+						        <contact>
+							        <email>cajic_dragan@yahoo.com</email>
+							        <name>Драган Ћајић</name>
+							        <url>http://learn-pisio.eu5.org/</url>
+						        </contact>
+					        </info>
+				        </apiSource>
+			        </apiSources>
+		        </configuration>
+	        </plugin>
         </plugins>
     </build>
 
