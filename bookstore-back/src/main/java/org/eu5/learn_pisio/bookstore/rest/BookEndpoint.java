@@ -18,6 +18,7 @@ public class BookEndpoint {
 	@Inject
 	private BookRepository bookRepository;
 	
+	// TODO: Implement other methods. Make it to WORK! -> Драган Ћајић
 	public Book getBook(Long id) {
 		return bookRepository.find(id);
 	}
