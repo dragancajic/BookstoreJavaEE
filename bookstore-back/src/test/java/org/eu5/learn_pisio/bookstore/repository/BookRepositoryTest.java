@@ -2,6 +2,9 @@ package org.eu5.learn_pisio.bookstore.repository;
 
 import org.eu5.learn_pisio.bookstore.model.Book;
 import org.eu5.learn_pisio.bookstore.model.Language;
+import org.eu5.learn_pisio.bookstore.util.IsbnGenerator;
+import org.eu5.learn_pisio.bookstore.util.NumberGenerator;
+import org.eu5.learn_pisio.bookstore.util.TextUtil;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -43,7 +46,7 @@ public class BookRepositoryTest {
 		assertEquals(0, bookRepository.findAll().size());
 
 		// Create a book
-		Book book = new Book("isbn", "a title", 12F, 123,
+		Book book = new Book("isbn", "a  title", 12F, 123,
 				Language.ENGLISH, new Date(), "http://blahblah", "description");
 		book = bookRepository.create(book);
 		Long bookId = book.getId();
@@ -52,10 +55,11 @@ public class BookRepositoryTest {
 		assertNotNull(bookId);
 
 		// Find created book
-		Book bookFind = bookRepository.find(bookId);
+		Book bookFound = bookRepository.find(bookId);
 
 		// Check the found book
-		assertEquals("a title", bookFind.getTitle());
+		assertEquals("a title", bookFound.getTitle());
+		assertTrue(bookFound.getIsbn().startsWith("13"));
 
 		// Test counting books
 		assertEquals(Long.valueOf(1), bookRepository.countAll());
@@ -75,6 +79,9 @@ public class BookRepositoryTest {
 				.addClass(Book.class)
 				.addClass(Language.class)
 				.addClass(BookRepository.class)
+				.addClass(TextUtil.class)
+				.addClass(NumberGenerator.class)
+				.addClass(IsbnGenerator.class)
 				.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
 				.addAsManifestResource("META-INF/test-persistence.xml", "persistence.xml");
 	}
