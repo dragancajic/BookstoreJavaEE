@@ -19,10 +19,21 @@
     "@angular/platform-browser": "~11.2.11",
     "@angular/platform-browser-dynamic": "~11.2.11",
     "@angular/router": "~11.2.11",
+    "bootstrap": "5.0.0",
+    "jquery": "^3.6.0",
     "rxjs": "~6.6.0",
+    "tether": "^2.0.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
   },
+  "keywords": [
+    "angular",
+    "typescript",
+    "yarn",
+    "frontend"
+  ],
+  "author": "Драган Ћајић",
+  "license": "MIT",
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.10",
     "@angular/cli": "~11.2.10",
